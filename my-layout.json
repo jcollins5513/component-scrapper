@@ -1,0 +1,44 @@
+{
+  "id": "component-001",
+  "screenType": "landing",
+  "sections": [
+    {
+      "id": "section-hero-0",
+      "role": "hero",
+      "layoutHints": {
+        "displayType": "grid",
+        "gridColumns": 2,
+        "gap": 0,
+        "alignment": "center"
+      },
+      "slotIds": [
+        "slot-content-block-0",
+        "slot-hero-1"
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "slot-content-block-0",
+      "type": "container",
+      "role": "content-block",
+      "boundingBox": {
+        "x": 256,
+        "y": 108,
+        "width": 768,
+        "height": 96.078125
+      }
+    },
+    {
+      "id": "slot-hero-1",
+      "type": "text",
+      "role": "hero",
+      "boundingBox": {
+        "x": 256,
+        "y": 108,
+        "width": 768,
+        "height": 28
+      }
+    }
+  ]
+}

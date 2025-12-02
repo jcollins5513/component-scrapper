@@ -11,6 +11,7 @@ from playwright.sync_api import Page
 MetadataExtractor = Callable[[Page, Dict], Dict]
 CodeExtractor = Callable[[Page, Dict], Dict]
 Finder = Callable[[Optional[Page], Optional[int]], List[Dict]]
+LayoutAnalyzer = Callable[[Page, Optional[str], Optional[str]], Dict]
 
 
 @dataclass
@@ -23,6 +24,7 @@ class SourceAdapter:
     code_extractor: CodeExtractor
     preview_selectors: Optional[Sequence[str]] = None
     code_selectors: Optional[Sequence[str]] = None
+    layout_analyzer: Optional[LayoutAnalyzer] = None
 
 
 class UnknownSourceError(ValueError):
@@ -62,4 +64,9 @@ def get_adapter(source: str) -> SourceAdapter:
     if not loader:
         raise UnknownSourceError(f"Unsupported source '{source}'. Expected one of {list(ADAPTER_LOADERS)}.")
     return loader()
+
+
+
+
+
 

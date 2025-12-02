@@ -13,6 +13,7 @@ from playwright.sync_api import sync_playwright, Page
 
 from .screenshot_capture import capture_screenshot
 from .sources import get_adapter, SourceAdapter
+from .layout_analyzer import analyze_layout
 
 # Configure logging
 logging.basicConfig(
@@ -71,6 +72,7 @@ class ComponentScraper:
         browser_executable: Optional[str] = None,
         screenshot_mode: str = "both",
         source: str = "aceternity",
+        layout_analysis: bool = True,
     ):
         """
         Initialize the scraper.
@@ -81,6 +83,7 @@ class ComponentScraper:
             delay: Delay in seconds between requests
             browser_executable: Optional path to Chromium/Chrome executable
             screenshot_mode: Which screenshots to capture (preview, code, both)
+            layout_analysis: Whether to perform layout analysis (default: True)
         """
         self.source = source
         self.adapter: SourceAdapter = get_adapter(source)
@@ -91,6 +94,7 @@ class ComponentScraper:
         self.delay = delay
         self.browser_executable = browser_executable
         self.screenshot_mode = screenshot_mode if screenshot_mode in {"preview", "code", "both"} else "both"
+        self.layout_analysis = layout_analysis
         self.components_index = []
         
         # Create output directories
@@ -111,6 +115,7 @@ class ComponentScraper:
         metadata: dict,
         code: dict,
         screenshots: Optional[Dict[str, str]] = None,
+        layout: Optional[dict] = None,
     ) -> bool:
         """
         Save component data to library structure.
@@ -158,6 +163,17 @@ class ComponentScraper:
                 if download_asset(image_url, preview_path):
                     screenshot_summary["preview"] = True
             
+            # Save layout analysis if provided
+            layout_summary = None
+            if layout:
+                layout_path = component_dir / "layout.json"
+                with open(layout_path, 'w', encoding='utf-8') as f:
+                    json.dump(layout, f, indent=2, ensure_ascii=False)
+                layout_summary = {
+                    'sections': len(layout.get('sections', [])),
+                    'slots': len(layout.get('slots', [])),
+                    'screenType': layout.get('screenType', 'page'),
+                }
             
             # Add to index
             index_entry = {
@@ -173,6 +189,8 @@ class ComponentScraper:
                 'has_code': bool(code.get('code')),
                 'screenshots': screenshot_summary,
             }
+            if layout_summary:
+                index_entry['layout'] = layout_summary
             self.components_index.append(index_entry)
             
             logger.info(f"Saved component: {sanitized_name}")
@@ -235,8 +253,21 @@ class ComponentScraper:
                 ):
                     screenshots['code'] = str(temp_code)
             
+            # Perform layout analysis if enabled
+            layout = None
+            if self.layout_analysis:
+                try:
+                    # Use adapter's layout analyzer if available, otherwise use default
+                    if self.adapter.layout_analyzer:
+                        layout = self.adapter.layout_analyzer(page, sanitized_name, component_name)
+                    else:
+                        layout = analyze_layout(page, sanitized_name, component_name)
+                    logger.info(f"Layout analysis complete for {component_name}")
+                except Exception as e:
+                    logger.warning(f"Layout analysis failed for {component_name}: {str(e)}")
+            
             # Save component
-            success = self.save_component(component_name, metadata, code, screenshots)
+            success = self.save_component(component_name, metadata, code, screenshots, layout)
             
             # Clean up temporary screenshots that weren't moved
             for temp_path in list(screenshots.values()):
@@ -353,6 +384,18 @@ def main():
         default='both',
         help='Which screenshots to capture for each component',
     )
+    parser.add_argument(
+        '--layout-analysis',
+        action='store_true',
+        default=True,
+        help='Perform layout analysis (default: True)',
+    )
+    parser.add_argument(
+        '--no-layout-analysis',
+        dest='layout_analysis',
+        action='store_false',
+        help='Disable layout analysis',
+    )
     
     args = parser.parse_args()
     
@@ -363,6 +406,7 @@ def main():
         browser_executable=args.browser_path,
         screenshot_mode=args.screenshots,
         source=args.source,
+        layout_analysis=args.layout_analysis,
     )
     
     scraper.run(max_components=args.max)

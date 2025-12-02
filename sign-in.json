@@ -1,0 +1,950 @@
+{
+  "id": "component-001",
+  "screenType": "auth",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "patternSummary": {
+    "patternType": "hero-content",
+    "patternSequence": [
+      "hero",
+      "content"
+    ],
+    "sectionCount": 11,
+    "slotCount": 48,
+    "features": {
+      "hasNavigation": true,
+      "hasHero": true,
+      "hasCardGrid": false,
+      "hasFooter": false,
+      "hasImages": true,
+      "hasRepeatedGroups": true
+    },
+    "dominantLayout": "grid",
+    "layoutDistribution": {
+      "grid": 7,
+      "flex": 4
+    }
+  },
+  "grouping": {
+    "repeatedGroups": {
+      "repeated-content": {
+        "role": "content",
+        "count": 5,
+        "items": [
+          {
+            "index": 0,
+            "slotIds": [
+              "slot-content-block-4",
+              "slot-content-block-5",
+              "slot-content-block-7",
+              "slot-content-block-24",
+              "slot-content-block-30",
+              "slot-content-block-35",
+              "slot-content-block-36"
+            ]
+          },
+          {
+            "index": 1,
+            "slotIds": [
+              "slot-content-block-6",
+              "slot-content-block-10",
+              "slot-content-block-37",
+              "slot-content-block-38",
+              "slot-content-block-44",
+              "slot-content-block-47"
+            ]
+          },
+          {
+            "index": 2,
+            "slotIds": [
+              "slot-content-block-11",
+              "slot-content-block-21",
+              "slot-content-block-39",
+              "slot-content-block-45"
+            ]
+          },
+          {
+            "index": 3,
+            "slotIds": [
+              "slot-content-block-12"
+            ]
+          },
+          {
+            "index": 4,
+            "slotIds": [
+              "slot-content-block-22"
+            ]
+          }
+        ]
+      },
+      "repeated-hero-image": {
+        "role": "hero-image",
+        "count": 2,
+        "items": [
+          {
+            "index": 1,
+            "slotIds": [
+              "slot-hero-image-31"
+            ]
+          },
+          {
+            "index": 2,
+            "slotIds": [
+              "slot-hero-image-13"
+            ]
+          }
+        ]
+      },
+      "repeated-hero": {
+        "role": "hero",
+        "count": 1,
+        "items": [
+          {
+            "index": 1,
+            "slotIds": [
+              "slot-hero-17"
+            ]
+          }
+        ]
+      },
+      "repeated-image": {
+        "role": "image",
+        "count": 1,
+        "items": [
+          {
+            "index": 6,
+            "slotIds": [
+              "slot-image-26"
+            ]
+          }
+        ]
+      }
+    },
+    "visualGroups": {
+      "group-0": [
+        "slot-navigation-0",
+        "slot-content-block-1",
+        "slot-content-block-2"
+      ],
+      "group-1": [
+        "slot-content-block-3",
+        "slot-content-block-4",
+        "slot-content-block-5",
+        "slot-content-block-6",
+        "slot-content-block-7",
+        "slot-content-block-8",
+        "slot-content-block-9",
+        "slot-content-block-10",
+        "slot-content-block-11",
+        "slot-content-block-12",
+        "slot-content-block-24",
+        "slot-content-block-35",
+        "slot-content-block-42",
+        "slot-content-block-44",
+        "slot-content-block-45"
+      ],
+      "group-2": [
+        "slot-hero-image-13",
+        "slot-hero-image-31"
+      ],
+      "group-3": [
+        "slot-content-block-14",
+        "slot-content-block-15",
+        "slot-content-block-16",
+        "slot-content-block-19",
+        "slot-content-block-27",
+        "slot-content-block-28",
+        "slot-content-block-29",
+        "slot-content-block-30"
+      ],
+      "group-4": [
+        "slot-content-block-18",
+        "slot-content-block-20",
+        "slot-content-block-21",
+        "slot-content-block-22",
+        "slot-content-block-23",
+        "slot-content-block-25"
+      ],
+      "group-5": [
+        "slot-content-block-33",
+        "slot-content-block-34",
+        "slot-content-block-36",
+        "slot-content-block-37",
+        "slot-content-block-38",
+        "slot-content-block-39",
+        "slot-content-block-40",
+        "slot-content-block-41",
+        "slot-content-block-43"
+      ],
+      "group-6": [
+        "slot-content-block-46",
+        "slot-content-block-47"
+      ]
+    },
+    "groupCount": 7
+  },
+  "sections": [
+    {
+      "id": "section-hero-0",
+      "role": "hero",
+      "layoutHints": {
+        "displayType": "grid",
+        "gridColumns": 12,
+        "gap": 0.008,
+        "alignment": "center"
+      },
+      "slotIds": [
+        "slot-navigation-0",
+        "slot-content-block-1",
+        "slot-content-block-2",
+        "slot-content-block-3",
+        "slot-content-block-4",
+        "slot-content-block-5",
+        "slot-content-block-6",
+        "slot-content-block-7",
+        "slot-content-block-8",
+        "slot-content-block-9",
+        "slot-content-block-10",
+        "slot-content-block-11",
+        "slot-content-block-12",
+        "slot-hero-image-13",
+        "slot-content-block-14",
+        "slot-content-block-29",
+        "slot-content-block-30",
+        "slot-hero-image-31"
+      ]
+    },
+    {
+      "id": "section-hero-1",
+      "role": "hero",
+      "layoutHints": {
+        "displayType": "grid",
+        "gridColumns": 3,
+        "gap": 0.0,
+        "alignment": "center"
+      },
+      "slotIds": [
+        "slot-content-block-15",
+        "slot-content-block-16",
+        "slot-hero-17"
+      ]
+    },
+    {
+      "id": "section-content-2",
+      "role": "content",
+      "layoutHints": {
+        "displayType": "grid",
+        "gridColumns": 2,
+        "gap": 0.0,
+        "alignment": "center"
+      },
+      "slotIds": [
+        "slot-content-block-18",
+        "slot-content-block-19",
+        "slot-content-block-20"
+      ]
+    },
+    {
+      "id": "section-content-3",
+      "role": "content",
+      "layoutHints": {
+        "displayType": "flex",
+        "flexDirection": "column",
+        "gap": 24,
+        "alignment": "start"
+      },
+      "slotIds": [
+        "slot-content-block-21"
+      ]
+    },
+    {
+      "id": "section-content-4",
+      "role": "content",
+      "layoutHints": {
+        "displayType": "flex",
+        "flexDirection": "column",
+        "gap": 24,
+        "alignment": "start"
+      },
+      "slotIds": [
+        "slot-content-block-22"
+      ]
+    },
+    {
+      "id": "section-content-5",
+      "role": "content",
+      "layoutHints": {
+        "displayType": "grid",
+        "gridColumns": 2,
+        "gap": 0.0,
+        "alignment": "center"
+      },
+      "slotIds": [
+        "slot-content-block-23",
+        "slot-content-block-24",
+        "slot-content-block-25"
+      ]
+    },
+    {
+      "id": "section-content-6",
+      "role": "content",
+      "layoutHints": {
+        "displayType": "flex",
+        "flexDirection": "column",
+        "gap": 24,
+        "alignment": "start"
+      },
+      "slotIds": [
+        "slot-image-26"
+      ]
+    },
+    {
+      "id": "section-content-7",
+      "role": "content",
+      "layoutHints": {
+        "displayType": "grid",
+        "gridColumns": 2,
+        "gap": 0.0,
+        "alignment": "center"
+      },
+      "slotIds": [
+        "slot-content-block-27",
+        "slot-content-block-28"
+      ]
+    },
+    {
+      "id": "section-content-8",
+      "role": "content",
+      "layoutHints": {
+        "displayType": "grid",
+        "gridColumns": 9,
+        "gap": 0.037,
+        "alignment": "center"
+      },
+      "slotIds": [
+        "slot-content-block-32",
+        "slot-content-block-33",
+        "slot-content-block-34",
+        "slot-content-block-35",
+        "slot-content-block-36",
+        "slot-content-block-37",
+        "slot-content-block-38",
+        "slot-content-block-39",
+        "slot-content-block-40",
+        "slot-content-block-41"
+      ]
+    },
+    {
+      "id": "section-content-9",
+      "role": "content",
+      "layoutHints": {
+        "displayType": "flex",
+        "flexDirection": "column",
+        "gap": 24,
+        "alignment": "start"
+      },
+      "slotIds": [
+        "slot-content-block-42"
+      ]
+    },
+    {
+      "id": "section-content-10",
+      "role": "content",
+      "layoutHints": {
+        "displayType": "grid",
+        "gridColumns": 5,
+        "gap": 0.0,
+        "alignment": "center"
+      },
+      "slotIds": [
+        "slot-content-block-43",
+        "slot-content-block-44",
+        "slot-content-block-45",
+        "slot-content-block-46",
+        "slot-content-block-47"
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "slot-navigation-0",
+      "type": "container",
+      "role": "navigation",
+      "boundingBox": {
+        "x": 0.05,
+        "y": 0.0222,
+        "width": 0.9,
+        "height": 0.0819
+      }
+    },
+    {
+      "id": "slot-content-block-1",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.0625,
+        "y": 0.0333,
+        "width": 0.875,
+        "height": 0.0597
+      }
+    },
+    {
+      "id": "slot-content-block-2",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.0813,
+        "y": 0.0333,
+        "width": 0.0936,
+        "height": 0.0597
+      }
+    },
+    {
+      "id": "slot-content-block-3",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1873,
+        "y": 0.0354,
+        "width": 0.7502,
+        "height": 0.0556
+      }
+    },
+    {
+      "id": "slot-content-block-4",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.4422,
+        "y": 0.0354,
+        "width": 0.2405,
+        "height": 0.0556
+      },
+      "repeated": true,
+      "repeatedIndex": 0
+    },
+    {
+      "id": "slot-content-block-5",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.4422,
+        "y": 0.0354,
+        "width": 0.0755,
+        "height": 0.0556
+      },
+      "repeated": true,
+      "repeatedIndex": 0
+    },
+    {
+      "id": "slot-content-block-6",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.4422,
+        "y": 0.0354,
+        "width": 0.0693,
+        "height": 0.0556
+      },
+      "repeated": true,
+      "repeatedIndex": 1
+    },
+    {
+      "id": "slot-content-block-7",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.5177,
+        "y": 0.0354,
+        "width": 0.0527,
+        "height": 0.0556
+      },
+      "repeated": true,
+      "repeatedIndex": 0
+    },
+    {
+      "id": "slot-content-block-8",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.5177,
+        "y": 0.0354,
+        "width": 0.0464,
+        "height": 0.0556
+      }
+    },
+    {
+      "id": "slot-content-block-9",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.5703,
+        "y": 0.0354,
+        "width": 0.0586,
+        "height": 0.0556
+      }
+    },
+    {
+      "id": "slot-content-block-10",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.5703,
+        "y": 0.0354,
+        "width": 0.0524,
+        "height": 0.0556
+      },
+      "repeated": true,
+      "repeatedIndex": 1
+    },
+    {
+      "id": "slot-content-block-11",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.6289,
+        "y": 0.0354,
+        "width": 0.0537,
+        "height": 0.0556
+      },
+      "repeated": true,
+      "repeatedIndex": 2
+    },
+    {
+      "id": "slot-content-block-12",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.6289,
+        "y": 0.0354,
+        "width": 0.0474,
+        "height": 0.0556
+      },
+      "repeated": true,
+      "repeatedIndex": 3
+    },
+    {
+      "id": "slot-hero-image-13",
+      "type": "image",
+      "role": "hero-image",
+      "boundingBox": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 0.8567
+      },
+      "aspect": "27:13",
+      "repeated": true,
+      "repeatedIndex": 2
+    },
+    {
+      "id": "slot-content-block-14",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1172,
+        "y": 0.0,
+        "width": 0.3063,
+        "height": 0.8567
+      }
+    },
+    {
+      "id": "slot-content-block-15",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1266,
+        "y": 0.1778,
+        "width": 0.2875,
+        "height": 0.6789
+      }
+    },
+    {
+      "id": "slot-content-block-16",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1266,
+        "y": 0.1778,
+        "width": 0.2875,
+        "height": 0.1378
+      }
+    },
+    {
+      "id": "slot-hero-17",
+      "type": "image",
+      "role": "hero",
+      "boundingBox": {
+        "x": 0.1453,
+        "y": 0.2111,
+        "width": 0.25,
+        "height": 0.0573
+      },
+      "aspect": "132:17",
+      "repeated": true,
+      "repeatedIndex": 1
+    },
+    {
+      "id": "slot-content-block-18",
+      "type": "text",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1453,
+        "y": 0.2795,
+        "width": 0.25,
+        "height": 0.0361
+      }
+    },
+    {
+      "id": "slot-content-block-19",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1266,
+        "y": 0.3156,
+        "width": 0.2875,
+        "height": 0.4452
+      }
+    },
+    {
+      "id": "slot-content-block-20",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1453,
+        "y": 0.349,
+        "width": 0.25,
+        "height": 0.3786
+      }
+    },
+    {
+      "id": "slot-content-block-21",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1453,
+        "y": 0.3906,
+        "width": 0.25,
+        "height": 0.0561
+      },
+      "repeated": true,
+      "repeatedIndex": 2
+    },
+    {
+      "id": "slot-content-block-22",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1453,
+        "y": 0.5106,
+        "width": 0.25,
+        "height": 0.0561
+      },
+      "repeated": true,
+      "repeatedIndex": 4
+    },
+    {
+      "id": "slot-content-block-23",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1453,
+        "y": 0.5889,
+        "width": 0.25,
+        "height": 0.0458
+      }
+    },
+    {
+      "id": "slot-content-block-24",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1859,
+        "y": 0.5903,
+        "width": 0.0757,
+        "height": 0.0333
+      },
+      "repeated": true,
+      "repeatedIndex": 0
+    },
+    {
+      "id": "slot-content-block-25",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1453,
+        "y": 0.6375,
+        "width": 0.25,
+        "height": 0.09
+      }
+    },
+    {
+      "id": "slot-image-26",
+      "type": "image",
+      "role": "image",
+      "boundingBox": {
+        "x": 0.1453,
+        "y": 0.6709,
+        "width": 0.25,
+        "height": 0.0567
+      },
+      "aspect": "149:19",
+      "repeated": true,
+      "repeatedIndex": 6
+    },
+    {
+      "id": "slot-content-block-27",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1266,
+        "y": 0.7609,
+        "width": 0.2875,
+        "height": 0.0958
+      }
+    },
+    {
+      "id": "slot-content-block-28",
+      "type": "text",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1328,
+        "y": 0.7609,
+        "width": 0.275,
+        "height": 0.0292
+      }
+    },
+    {
+      "id": "slot-content-block-29",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.5,
+        "y": 0.0,
+        "width": 0.4594,
+        "height": 0.8567
+      }
+    },
+    {
+      "id": "slot-content-block-30",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.5825,
+        "y": 0.0,
+        "width": 0.685,
+        "height": 0.8567
+      },
+      "repeated": true,
+      "repeatedIndex": 0
+    },
+    {
+      "id": "slot-hero-image-31",
+      "type": "image",
+      "role": "hero-image",
+      "boundingBox": {
+        "x": 0.575,
+        "y": 0.0,
+        "width": 0.65,
+        "height": 0.8567
+      },
+      "aspect": "27:20",
+      "repeated": true,
+      "repeatedIndex": 1
+    },
+    {
+      "id": "slot-content-block-32",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.0,
+        "y": 0.8567,
+        "width": 1.0,
+        "height": 0.328
+      }
+    },
+    {
+      "id": "slot-content-block-33",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.0312,
+        "y": 0.9234,
+        "width": 0.9375,
+        "height": 0.1947
+      }
+    },
+    {
+      "id": "slot-content-block-34",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.0406,
+        "y": 0.9234,
+        "width": 0.9187,
+        "height": 0.153
+      }
+    },
+    {
+      "id": "slot-content-block-35",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1938,
+        "y": 0.9234,
+        "width": 0.6125,
+        "height": 0.0355
+      },
+      "repeated": true,
+      "repeatedIndex": 0
+    },
+    {
+      "id": "slot-content-block-36",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.257,
+        "y": 0.9248,
+        "width": 0.0562,
+        "height": 0.0306
+      },
+      "repeated": true,
+      "repeatedIndex": 0
+    },
+    {
+      "id": "slot-content-block-37",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.3507,
+        "y": 0.9248,
+        "width": 0.054,
+        "height": 0.0306
+      },
+      "repeated": true,
+      "repeatedIndex": 1
+    },
+    {
+      "id": "slot-content-block-38",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.4422,
+        "y": 0.9248,
+        "width": 0.0341,
+        "height": 0.0306
+      },
+      "repeated": true,
+      "repeatedIndex": 1
+    },
+    {
+      "id": "slot-content-block-39",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.5138,
+        "y": 0.9248,
+        "width": 0.0523,
+        "height": 0.0306
+      },
+      "repeated": true,
+      "repeatedIndex": 2
+    },
+    {
+      "id": "slot-content-block-40",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.6036,
+        "y": 0.9248,
+        "width": 0.0272,
+        "height": 0.0306
+      }
+    },
+    {
+      "id": "slot-content-block-41",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.6683,
+        "y": 0.9248,
+        "width": 0.0372,
+        "height": 0.0306
+      }
+    },
+    {
+      "id": "slot-content-block-42",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1938,
+        "y": 1.0034,
+        "width": 0.6125,
+        "height": 0.0397
+      }
+    },
+    {
+      "id": "slot-content-block-43",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.0406,
+        "y": 1.0764,
+        "width": 0.9187,
+        "height": 0.0417
+      }
+    },
+    {
+      "id": "slot-content-block-44",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.1938,
+        "y": 1.082,
+        "width": 0.6125,
+        "height": 0.0361
+      },
+      "repeated": true,
+      "repeatedIndex": 1
+    },
+    {
+      "id": "slot-content-block-45",
+      "type": "text",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.2031,
+        "y": 1.082,
+        "width": 0.5938,
+        "height": 0.0361
+      },
+      "repeated": true,
+      "repeatedIndex": 2
+    },
+    {
+      "id": "slot-content-block-46",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.5312,
+        "y": 1.0847,
+        "width": 0.1655,
+        "height": 0.0306
+      }
+    },
+    {
+      "id": "slot-content-block-47",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.6169,
+        "y": 1.0847,
+        "width": 0.0798,
+        "height": 0.0306
+      },
+      "repeated": true,
+      "repeatedIndex": 1
+    }
+  ]
+}

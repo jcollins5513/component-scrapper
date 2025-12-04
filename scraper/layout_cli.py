@@ -313,12 +313,16 @@ def analyze_url(url: str, output_path: Optional[str] = None,
             page.goto(url, wait_until="networkidle", timeout=60000)
             layout = analyze_layout(page, component_id, component_name)
             
+            # Save to JSON file if output path provided
             if output_path:
                 output_file = Path(output_path)
                 output_file.parent.mkdir(parents=True, exist_ok=True)
                 with open(output_file, 'w', encoding='utf-8') as f:
                     json.dump(layout, f, indent=2, ensure_ascii=False)
                 logger.info(f"Layout analysis saved to {output_path}")
+            
+            # Template is automatically saved to database if SAVE_TEMPLATES_TO_DB=true
+            # (handled in analyze_layout function)
             
             return layout
             

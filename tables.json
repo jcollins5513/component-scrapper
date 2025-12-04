@@ -1,6 +1,6 @@
 {
   "id": "component-001",
-  "screenType": "auth",
+  "screenType": "tables",
   "viewport": {
     "width": 1280,
     "height": 720

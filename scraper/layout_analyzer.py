@@ -1,6 +1,7 @@
 """Layout analysis for extracting visual structure, bounding boxes, and semantic roles."""
 
 import logging
+import os
 from typing import Dict, List, Optional, Set
 from collections import defaultdict
 from dataclasses import dataclass
@@ -698,10 +699,20 @@ def analyze_layout(page: Page, component_id: Optional[str] = None,
             if e.bounding_box['width'] >= min_size and e.bounding_box['height'] >= min_size
         ]
         
+        # Limit to top portion of page (first 2 viewport heights)
+        # This keeps templates focused on above-the-fold content
+        max_y_position = viewport_height * 2  # 2 viewport heights
+        initial_count = len(significant_elements)
+        significant_elements = [
+            e for e in significant_elements
+            if e.bounding_box['y'] + e.bounding_box['height'] <= max_y_position
+        ]
+        logger.info(f"Filtered to {len(significant_elements)} elements within first 2 viewport heights (from {initial_count} total, max_y={max_y_position}px)")
+        
         # Detect repeated groups
         repeated_groups = _detect_repeated_groups(significant_elements)
         
-        # Create slots
+        # Create slots (only from elements in the top portion)
         slots: List[Slot] = []
         slot_counter = 0
         
@@ -711,9 +722,17 @@ def analyze_layout(page: Page, component_id: Optional[str] = None,
         # Track which elements are in repeated groups
         in_repeated_group: Set[int] = set()
         for group in repeated_groups.values():
-            in_repeated_group.update(group)
+            # Only include groups that are in the top portion
+            filtered_group = [idx for idx in group if idx < len(significant_elements)]
+            if len(filtered_group) > 1:
+                in_repeated_group.update(filtered_group)
         
         for i, element in enumerate(significant_elements):
+            # Double-check element is within viewport limit (safety check)
+            # Check if element bottom edge is beyond the limit
+            element_bottom = element.bounding_box['y'] + element.bounding_box['height']
+            if element.bounding_box['y'] >= max_y_position or element_bottom > max_y_position:
+                continue
             # Skip if element is too small or not meaningful
             if element.bounding_box['width'] < 50 and element.bounding_box['height'] < 50:
                 # Only skip if it's not text
@@ -809,12 +828,22 @@ def analyze_layout(page: Page, component_id: Optional[str] = None,
         sections: List[Section] = []
         section_counter = 0
         
+        # Filter slots to only include those in the top portion (normalized coordinates)
+        # Normalized coordinates: 0-1 = first viewport, 1-2 = second viewport
+        max_y_normalized = 2.0  # 2 viewport heights in normalized coordinates
+        initial_slot_count = len(slots)
+        filtered_slots = [
+            slot for slot in slots
+            if slot.bounding_box['y'] + slot.bounding_box['height'] <= max_y_normalized
+        ]
+        logger.info(f"Filtered to {len(filtered_slots)} slots within first 2 viewport heights (from {initial_slot_count} total, max_y_normalized={max_y_normalized})")
+        
         # Group by Y position (sections are typically stacked vertically)
         # Use normalized coordinates (0-1) with a tolerance of ~10% viewport height
         y_sections: Dict[float, List[Slot]] = defaultdict(list)
         tolerance = 0.1  # normalized units
 
-        for slot in slots:
+        for slot in filtered_slots:
             y = round(slot.bounding_box['y'] / tolerance) * tolerance
             y_sections[y].append(slot)
         
@@ -959,6 +988,19 @@ def analyze_layout(page: Page, component_id: Optional[str] = None,
         }
         
         logger.info(f"Layout analysis complete: {len(sections)} sections, {len(slots)} slots")
+        
+        # Optionally convert and save to database if enabled
+        save_to_db = os.getenv('SAVE_TEMPLATES_TO_DB', 'false').lower() == 'true'
+        if save_to_db:
+            try:
+                from .db_converter import convert_and_save
+                template_name = component_name or f"Scraped {screen_type.title()}"
+                converted = convert_and_save(result, template_name=template_name, save_to_db=True)
+                if converted:
+                    logger.info(f"Template automatically saved to database: {result['id']}")
+            except Exception as e:
+                logger.warning(f"Failed to save template to database: {str(e)}")
+        
         return result
         
     except Exception as e:

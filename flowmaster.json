@@ -1,0 +1,184 @@
+{
+  "id": "component-001",
+  "screenType": "page",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "patternSummary": {
+    "patternType": "content",
+    "patternSequence": [
+      "content"
+    ],
+    "sectionCount": 1,
+    "slotCount": 7,
+    "features": {
+      "hasNavigation": false,
+      "hasHero": false,
+      "hasCardGrid": false,
+      "hasFooter": false,
+      "hasImages": true,
+      "hasRepeatedGroups": true
+    },
+    "dominantLayout": "grid",
+    "layoutDistribution": {
+      "grid": 1
+    }
+  },
+  "grouping": {
+    "repeatedGroups": {
+      "repeated-content": {
+        "role": "content",
+        "count": 2,
+        "items": [
+          {
+            "index": 0,
+            "slotIds": [
+              "slot-content-block-0",
+              "slot-content-block-3"
+            ]
+          },
+          {
+            "index": 1,
+            "slotIds": [
+              "slot-content-block-6"
+            ]
+          }
+        ]
+      },
+      "repeated-image": {
+        "role": "image",
+        "count": 1,
+        "items": [
+          {
+            "index": 1,
+            "slotIds": [
+              "slot-image-1"
+            ]
+          }
+        ]
+      }
+    },
+    "visualGroups": {
+      "group-0": [
+        "slot-content-block-0",
+        "slot-image-1",
+        "slot-content-block-2",
+        "slot-content-block-3",
+        "slot-content-block-4",
+        "slot-content-block-5",
+        "slot-content-block-6"
+      ]
+    },
+    "groupCount": 1
+  },
+  "sections": [
+    {
+      "id": "section-content-0",
+      "role": "content",
+      "layoutHints": {
+        "displayType": "grid",
+        "gridColumns": 5,
+        "gap": 0.034,
+        "alignment": "center"
+      },
+      "slotIds": [
+        "slot-content-block-0",
+        "slot-image-1",
+        "slot-content-block-2",
+        "slot-content-block-3",
+        "slot-content-block-4",
+        "slot-content-block-5",
+        "slot-content-block-6"
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "slot-content-block-0",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.8956,
+        "y": 0.9222,
+        "width": 0.0919,
+        "height": 0.0556
+      },
+      "repeated": true,
+      "repeatedIndex": 0
+    },
+    {
+      "id": "slot-image-1",
+      "type": "image",
+      "role": "image",
+      "boundingBox": {
+        "x": 0.8956,
+        "y": 0.9222,
+        "width": 0.0919,
+        "height": 0.0556
+      },
+      "aspect": "50:17",
+      "repeated": true,
+      "repeatedIndex": 1
+    },
+    {
+      "id": "slot-content-block-2",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 0.9026,
+        "y": 0.9361,
+        "width": 0.0779,
+        "height": 0.0278
+      }
+    },
+    {
+      "id": "slot-content-block-3",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 1.0305,
+        "y": 0.9333,
+        "width": 0.0491,
+        "height": 0.0333
+      },
+      "repeated": true,
+      "repeatedIndex": 0
+    },
+    {
+      "id": "slot-content-block-4",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 1.0983,
+        "y": 0.9333,
+        "width": 0.0916,
+        "height": 0.0333
+      }
+    },
+    {
+      "id": "slot-content-block-5",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 1.0983,
+        "y": 0.9333,
+        "width": 0.0438,
+        "height": 0.0333
+      }
+    },
+    {
+      "id": "slot-content-block-6",
+      "type": "container",
+      "role": "content",
+      "boundingBox": {
+        "x": 1.1421,
+        "y": 0.9333,
+        "width": 0.0477,
+        "height": 0.0333
+      },
+      "repeated": true,
+      "repeatedIndex": 1
+    }
+  ]
+}

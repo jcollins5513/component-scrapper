@@ -23,6 +23,8 @@ class ElementInfo:
     is_visible: bool
     has_children: bool
     computed_styles: Dict[str, str]
+    animations: Optional[Dict[str, any]] = None
+    component_info: Optional[Dict[str, any]] = None
 
 
 @dataclass
@@ -35,6 +37,8 @@ class Slot:
     aspect: Optional[str] = None
     repeated: bool = False
     repeated_index: Optional[int] = None
+    animations: Optional[Dict[str, any]] = None
+    component_info: Optional[Dict[str, any]] = None
 
 
 @dataclass
@@ -44,6 +48,122 @@ class Section:
     role: str
     layout_hints: Dict[str, any]
     slot_ids: List[str]
+    animations: Optional[List[Dict[str, any]]] = None
+    components: Optional[List[Dict[str, any]]] = None
+
+
+def _detect_animations(page: Page, element_handle) -> Optional[Dict[str, any]]:
+    """Detect CSS animations and transitions on an element."""
+    try:
+        animation_data = element_handle.evaluate("""
+            el => {
+                const style = window.getComputedStyle(el);
+                const animations = {
+                    animation: style.animation || style.webkitAnimation || null,
+                    animationName: style.animationName || style.webkitAnimationName || null,
+                    animationDuration: style.animationDuration || style.webkitAnimationDuration || null,
+                    animationTimingFunction: style.animationTimingFunction || style.webkitAnimationTimingFunction || null,
+                    animationDelay: style.animationDelay || style.webkitAnimationDelay || null,
+                    animationIterationCount: style.animationIterationCount || style.webkitAnimationIterationCount || null,
+                    animationDirection: style.animationDirection || style.webkitAnimationDirection || null,
+                    transition: style.transition || style.webkitTransition || null,
+                    transitionProperty: style.transitionProperty || style.webkitTransitionProperty || null,
+                    transitionDuration: style.transitionDuration || style.webkitTransitionDuration || null,
+                    transitionTimingFunction: style.transitionTimingFunction || style.webkitTransitionTimingFunction || null,
+                    transform: style.transform || style.webkitTransform || null,
+                };
+                
+                // Check if element has any animations or transitions
+                const hasAnimation = animation_data.animation && 
+                                    animation_data.animation !== 'none' && 
+                                    animation_data.animation !== '';
+                const hasTransition = animation_data.transition && 
+                                     animation_data.transition !== 'none' && 
+                                     animation_data.transition !== '';
+                const hasTransform = animation_data.transform && 
+                                    animation_data.transform !== 'none' && 
+                                    animation_data.transform !== '';
+                
+                if (!hasAnimation && !hasTransition && !hasTransform) {
+                    return null;
+                }
+                
+                // Clean up null values
+                const cleaned = {};
+                for (const [key, value] of Object.entries(animation_data)) {
+                    if (value && value !== 'none' && value !== '') {
+                        cleaned[key] = value;
+                    }
+                }
+                
+                return Object.keys(cleaned).length > 0 ? cleaned : null;
+            }
+        """)
+        return animation_data
+    except Exception as e:
+        logger.debug(f"Error detecting animations: {e}")
+        return None
+
+
+def _detect_component(element_handle) -> Optional[Dict[str, any]]:
+    """Detect component information from element attributes."""
+    try:
+        component_data = element_handle.evaluate("""
+            el => {
+                const data = {};
+                
+                // Check for React component indicators
+                const reactKey = el.getAttribute('data-reactroot') || 
+                                el.getAttribute('data-react-component') ||
+                                el.getAttribute('data-component');
+                if (reactKey) {
+                    data.reactComponent = true;
+                    data.componentId = reactKey;
+                }
+                
+                // Check for data attributes that might indicate components
+                const dataAttrs = {};
+                for (let attr of el.attributes) {
+                    if (attr.name.startsWith('data-')) {
+                        const key = attr.name.replace('data-', '');
+                        // Skip common data attributes that aren't component-related
+                        if (!['testid', 'id', 'cy', 'qa'].includes(key)) {
+                            dataAttrs[key] = attr.value;
+                        }
+                    }
+                }
+                if (Object.keys(dataAttrs).length > 0) {
+                    data.dataAttributes = dataAttrs;
+                }
+                
+                // Check for component-like class patterns
+                const classList = Array.from(el.classList || []);
+                const componentClasses = classList.filter(cls => 
+                    cls.includes('component') || 
+                    cls.includes('widget') || 
+                    cls.match(/^[A-Z][a-zA-Z]*$/) // PascalCase classes often indicate components
+                );
+                if (componentClasses.length > 0) {
+                    data.componentClasses = componentClasses;
+                }
+                
+                // Check for Vue component indicators
+                if (el.hasAttribute('data-v-')) {
+                    data.vueComponent = true;
+                }
+                
+                // Check for Angular component indicators
+                if (el.hasAttribute('ng-version') || el.hasAttribute('_ngcontent')) {
+                    data.angularComponent = true;
+                }
+                
+                return Object.keys(data).length > 0 ? data : null;
+            }
+        """)
+        return component_data
+    except Exception as e:
+        logger.debug(f"Error detecting component: {e}")
+        return None
 
 
 def _gcd(a: int, b: int) -> int:
@@ -146,6 +266,10 @@ def _get_element_info(page: Page, element_handle) -> Optional[ElementInfo]:
             }
         """) or {}
 
+        # Detect animations and components
+        animations = _detect_animations(page, element_handle)
+        component_info = _detect_component(element_handle)
+
         # Determine element type
         class_str = ' '.join(class_names).lower()
         bg_image_style = computed_styles.get('backgroundImage', '') or ''
@@ -176,6 +300,8 @@ def _get_element_info(page: Page, element_handle) -> Optional[ElementInfo]:
             is_visible=is_visible,
             has_children=has_children,
             computed_styles=computed_styles,
+            animations=animations,
+            component_info=component_info,
         )
     except Exception as e:
         logger.debug(f"Error extracting element info: {e}")
@@ -478,6 +604,14 @@ def _infer_screen_type(elements: List[ElementInfo], sections: List[Section]) -> 
         return 'blog'
     if 'landing' in class_str or any('hero' in r for r in roles):
         return 'landing'
+    
+    # Dashboard detection
+    dashboard_keywords = [
+        'dashboard', 'analytics', 'metrics', 'admin', 'admin-panel', 
+        'control-panel', 'admin panel', 'control panel'
+    ]
+    if any(k in text_str for k in dashboard_keywords) or any(k in class_str for k in dashboard_keywords):
+        return 'dashboard'
 
     return 'page'
 
@@ -571,6 +705,9 @@ def analyze_layout(page: Page, component_id: Optional[str] = None,
         slots: List[Slot] = []
         slot_counter = 0
         
+        # Map slot IDs to elements for later reference
+        slot_to_element: Dict[str, ElementInfo] = {}
+        
         # Track which elements are in repeated groups
         in_repeated_group: Set[int] = set()
         for group in repeated_groups.values():
@@ -662,8 +799,11 @@ def analyze_layout(page: Page, component_id: Optional[str] = None,
                 aspect=aspect,
                 repeated=is_repeated,
                 repeated_index=repeated_index,
+                animations=element.animations,
+                component_info=element.component_info,
             )
             slots.append(slot)
+            slot_to_element[slot_id] = element
         
         # Group slots into sections
         sections: List[Section] = []
@@ -708,11 +848,34 @@ def analyze_layout(page: Page, component_id: Optional[str] = None,
             section_id = f"section-{section_role}-{section_counter}"
             section_counter += 1
             
+            # Aggregate animations and components for this section
+            section_animations: List[Dict[str, any]] = []
+            section_components: List[Dict[str, any]] = []
+            
+            for slot in section_slots:
+                # Collect unique animations from slots in this section
+                if slot.animations:
+                    animation_entry = {
+                        'slotId': slot.id,
+                        'animation': slot.animations,
+                    }
+                    section_animations.append(animation_entry)
+                
+                # Collect unique components from slots in this section
+                if slot.component_info:
+                    component_entry = {
+                        'slotId': slot.id,
+                        'component': slot.component_info,
+                    }
+                    section_components.append(component_entry)
+            
             section = Section(
                 id=section_id,
                 role=section_role,
                 layout_hints=layout_hints,
                 slot_ids=[s.id for s in section_slots],
+                animations=section_animations if section_animations else None,
+                components=section_components if section_components else None,
             )
             sections.append(section)
         
@@ -774,6 +937,8 @@ def analyze_layout(page: Page, component_id: Optional[str] = None,
                     'role': s.role,
                     'layoutHints': s.layout_hints,
                     'slotIds': s.slot_ids,
+                    **({'animations': s.animations} if s.animations else {}),
+                    **({'components': s.components} if s.components else {}),
                 }
                 for s in sections
             ],
@@ -786,6 +951,8 @@ def analyze_layout(page: Page, component_id: Optional[str] = None,
                     **({'aspect': s.aspect} if s.aspect else {}),
                     **({'repeated': s.repeated, 'repeatedIndex': s.repeated_index} 
                        if s.repeated else {}),
+                    **({'animations': s.animations} if s.animations else {}),
+                    **({'componentInfo': s.component_info} if s.component_info else {}),
                 }
                 for s in slots
             ],
